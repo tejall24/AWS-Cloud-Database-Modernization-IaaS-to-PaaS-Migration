@@ -45,7 +45,11 @@ INSERT INTO studentInfo VALUES (103, 'isha', 'aws');
 SELECT * FROM studentInfo;
 ```
 **EC2 Database Output:**  
-![EC2 Database Output](images/fctdb.png)
+![EC2 Database Output](images/fctdb.img)
+
+---
+**EC2 Database Output:**  
+![EC2 Database Output](images/rdsdb.jpg)
 
 ---
 
@@ -97,8 +101,6 @@ SELECT * FROM studentInfo;
 
 ---
 
-## 📊 AWS RDS Instance Screenshot
-![AWS RDS Screenshot](images/rdsdb.JPG)
 
 ---
 
