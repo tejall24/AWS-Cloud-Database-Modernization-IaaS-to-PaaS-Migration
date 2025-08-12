@@ -45,7 +45,8 @@ INSERT INTO studentInfo VALUES (102, 'ishwar', 'java');
 INSERT INTO studentInfo VALUES (103, 'isha', 'aws');
 SELECT * FROM studentInfo;
 EC2 Database Output:
-
+exit
+````
 📦 Step 3: Backup Database from EC2 (IaaS)
 bash
 Copy
