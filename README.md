@@ -1,101 +1,91 @@
 # AWS Cloud Database Modernization: IaaS to PaaS Migration
 
+## 📖 Introduction
+This project demonstrates the migration of a MySQL database from an EC2 instance (IaaS) to an Amazon RDS instance (PaaS).  
+It covers:
+- Creating a database (`fct`) and table (`studentInfo`) on EC2
+- Inserting sample data
+- Backing up the EC2 database
+- Restoring the backup into an RDS database (`rdsdb`)
+- Verifying the data after migration
+- Presenting the AWS architecture and final output screenshots
+
+---
+
+## 🏗 Architecture Diagram
+![Architecture Diagram](images/architecture_diagram.png)
 
 ---
 
 ## 1️⃣ Step 1: Create Database on EC2 (IaaS)
-# SSH into EC2 (replace values)
+```bash
 ssh -i mykey.pem ec2-user@<EC2_PUBLIC_IP>
-
-# Update packages & install MariaDB/MySQL
 sudo yum update -y
-sudo yum install -y mariadb-server    # Or use mysql-server on ubuntu: sudo apt install -y mysql-server
-
-# Start and enable service
+sudo yum install -y mariadb-server
 sudo systemctl start mariadb
 sudo systemctl enable mariadb
-
-# Secure installation (optional interactive)
 sudo mysql_secure_installation
-
----
----
-
-## 2️⃣ Step 2: Insert Sample Data into EC2 Database
-# Login to MySQL on EC2
+2️⃣ Step 2: Insert Sample Data into EC2 Database
+bash
+Copy
+Edit
 mysql -u root -p
-# (enter the MySQL root password when prompted)
-
--- create database and table
 CREATE DATABASE fct;
 USE fct;
-
 CREATE TABLE studentInfo (
   SR_no INT PRIMARY KEY,
   NAME VARCHAR(50),
   Crouse VARCHAR(50)
 );
-
--- insert sample data
 INSERT INTO studentInfo VALUES (101, 'tejal', 'aws');
 INSERT INTO studentInfo VALUES (102, 'ishwar', 'java');
 INSERT INTO studentInfo VALUES (103, 'isha', 'aws');
-
--- verify
 SELECT * FROM studentInfo;
+EC2 Database Output:
 
--- exit MySQL
-EXIT;
-
----
-
-## 3️⃣ Step 3: Verify EC2 Database Data
-# still on EC2 (or re-SSH if you exited)
-mysql -u root -p -e "USE fct; SELECT * FROM studentInfo;"
-# This prints the table contents directly in shell.
-
-
----
-
-## 📦 Step 4: Backup Database from EC2 (IaaS)
-# on EC2 terminal
+📦 Step 3: Backup Database from EC2 (IaaS)
+bash
+Copy
+Edit
 mysqldump -u root -p fct > fct_backup.sql
-# enter mysql root password when prompted
+📤 Step 4: Transfer Backup File
+If copying from EC2 to your local machine:
 
-# verify file
-ls -lh fct_backup.sql
-
----
-
-## 📤 Step 5: Transfer Backup File to Local or RDS Host
-# From local machine, copy from EC2 to local (replace values)
+bash
+Copy
+Edit
 scp -i mykey.pem ec2-user@<EC2_PUBLIC_IP>:~/fct_backup.sql .
+If copying from local to another EC2/RDS environment:
 
-# If compressed:
-scp -i mykey.pem ec2-user@<EC2_PUBLIC_IP>:~/fct_backup.sql.gz .
-
----
-
-## ☁️ Step 6: Restore Backup to Amazon RDS (PaaS)
-# Restore from local machine to RDS
+bash
+Copy
+Edit
+scp -i mykey.pem fct_backup.sql ec2-user@<DESTINATION_IP>:/home/ec2-user/
+☁️ Step 5: Restore Backup to Amazon RDS (PaaS)
+bash
+Copy
+Edit
+mysql -h <RDS_ENDPOINT> -u admin -p -e "CREATE DATABASE IF NOT EXISTS rdsdb;"
 mysql -h <RDS_ENDPOINT> -u admin -p rdsdb < fct_backup.sql
-# when prompted, enter RDS master password
-
----
-
-## 🔍 Step 7: Verify Data on RDS Database
-# connect to RDS and inspect
+🔍 Step 6: Verify Data on RDS Database
+bash
+Copy
+Edit
 mysql -h <RDS_ENDPOINT> -u admin -p
-
-# inside mysql prompt:
-SHOW DATABASES;
 USE rdsdb;
-SHOW TABLES;
 SELECT * FROM studentInfo;
-EXIT;
+RDS Database Output:
 
----
+📊 AWS RDS Instance Screenshot
 
-## 🏗 Step 8: AWS Architecture Diagram
+✅ Conclusion
+This workflow successfully migrates a MySQL database from EC2 (IaaS) to RDS (PaaS) using AWS services.
+It demonstrates:
 
----
+Database provisioning on EC2
+
+Data backup and restoration
+
+Cloud database management in RDS
+
+Verification of successful migration
