@@ -26,8 +26,9 @@ sudo systemctl start mariadb
 sudo systemctl enable mariadb
 sudo mysql_secure_installation
 exit
+````
 
-2️⃣ Step 2: Insert Sample Data into EC2 Database
+##2️⃣ Step 2: Insert Sample Data into EC2 Database
 bash
 Copy
 Edit
