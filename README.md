@@ -49,7 +49,7 @@ SELECT * FROM studentInfo;
 
 ---
 **EC2 Database Output:**  
-![EC2 Database Output](images/rdsdb.jpg)
+![EC2 Database Output](images/rdsdb.JPG)
 
 ---
 
