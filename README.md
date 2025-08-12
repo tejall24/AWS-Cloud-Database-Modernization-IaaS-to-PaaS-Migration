@@ -7,7 +7,7 @@ We take an existing database (`fct`) with a `studentInfo` table, export it using
 ---
 
 ## 🏗 Architecture
-![Architecture Diagram](images/architecture diagram.png)
+![Architecture Diagram](images/architecture_diagram.png)
 
 ---
 
