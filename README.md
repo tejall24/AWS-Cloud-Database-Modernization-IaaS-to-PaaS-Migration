@@ -38,8 +38,7 @@ INSERT INTO studentInfo VALUES (103, 'isha', 'aws');
 
 # Verify data
 SELECT * FROM studentInfo;
-
-2️⃣ Export Database from EC2
+exit
 ### **1️⃣ Export Database from EC2**
 ```bash
 mysqldump -u root -p fct > fct_backup.sql
