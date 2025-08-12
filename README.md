@@ -25,13 +25,12 @@ sudo yum install -y mariadb-server
 sudo systemctl start mariadb
 sudo systemctl enable mariadb
 sudo mysql_secure_installation
-exit
-````
+```
 
-##2️⃣ Step 2: Insert Sample Data into EC2 Database
-bash
-Copy
-Edit
+---
+
+## 2️⃣ Step 2: Insert Sample Data into EC2 Database
+```bash
 mysql -u root -p
 CREATE DATABASE fct;
 USE fct;
@@ -44,52 +43,59 @@ INSERT INTO studentInfo VALUES (101, 'tejal', 'aws');
 INSERT INTO studentInfo VALUES (102, 'ishwar', 'java');
 INSERT INTO studentInfo VALUES (103, 'isha', 'aws');
 SELECT * FROM studentInfo;
-EC2 Database Output:
-exit
-````
-📦 Step 3: Backup Database from EC2 (IaaS)
-bash
-Copy
-Edit
+```
+**EC2 Database Output:**  
+![EC2 Database Output](images/fctdb.png)
+
+---
+
+## 📦 Step 3: Backup Database from EC2 (IaaS)
+```bash
 mysqldump -u root -p fct > fct_backup.sql
-📤 Step 4: Transfer Backup File
-If copying from EC2 to your local machine:
+```
 
-bash
-Copy
-Edit
+---
+
+## 📤 Step 4: Transfer Backup File
+**If copying from EC2 to your local machine:**
+```bash
 scp -i mykey.pem ec2-user@<EC2_PUBLIC_IP>:~/fct_backup.sql .
-If copying from local to another EC2/RDS environment:
-
-bash
-Copy
-Edit
+```
+**If copying from local to another EC2/RDS environment:**
+```bash
 scp -i mykey.pem fct_backup.sql ec2-user@<DESTINATION_IP>:/home/ec2-user/
-☁️ Step 5: Restore Backup to Amazon RDS (PaaS)
-bash
-Copy
-Edit
+```
+
+---
+
+## ☁️ Step 5: Restore Backup to Amazon RDS (PaaS)
+```bash
 mysql -h <RDS_ENDPOINT> -u admin -p -e "CREATE DATABASE IF NOT EXISTS rdsdb;"
 mysql -h <RDS_ENDPOINT> -u admin -p rdsdb < fct_backup.sql
-🔍 Step 6: Verify Data on RDS Database
-bash
-Copy
-Edit
+```
+
+---
+
+## 🔍 Step 6: Verify Data on RDS Database
+```bash
 mysql -h <RDS_ENDPOINT> -u admin -p
 USE rdsdb;
 SELECT * FROM studentInfo;
-RDS Database Output:
+```
+**RDS Database Output:**  
+![RDS Database Output](images/final_rdsdb_output.JPG)
 
-📊 AWS RDS Instance Screenshot
+---
 
-✅ Conclusion
-This workflow successfully migrates a MySQL database from EC2 (IaaS) to RDS (PaaS) using AWS services.
+## 📊 AWS RDS Instance Screenshot
+![AWS RDS Screenshot](images/rdsdb.JPG)
+
+---
+
+## ✅ Conclusion
+This workflow successfully migrates a MySQL database from EC2 (IaaS) to RDS (PaaS) using AWS services.  
 It demonstrates:
-
-Database provisioning on EC2
-
-Data backup and restoration
-
-Cloud database management in RDS
-
-Verification of successful migration
+- Database provisioning on EC2  
+- Data backup and restoration  
+- Cloud database management in RDS  
+- Verification of successful migration  
