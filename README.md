@@ -1,4 +1,17 @@
 # AWS Cloud Database Modernization: IaaS to PaaS Migration
+# SSH into EC2 (replace values)
+ssh -i mykey.pem ec2-user@<EC2_PUBLIC_IP>
+
+# Update packages & install MariaDB/MySQL
+sudo yum update -y
+sudo yum install -y mariadb-server    # Or use mysql-server on ubuntu: sudo apt install -y mysql-server
+
+# Start and enable service
+sudo systemctl start mariadb
+sudo systemctl enable mariadb
+
+# Secure installation (optional interactive)
+sudo mysql_secure_installation
 
 ---
 
