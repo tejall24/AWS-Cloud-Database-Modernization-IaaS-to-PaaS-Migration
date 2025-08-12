@@ -5,7 +5,7 @@ This project demonstrates the migration of a MySQL database from an EC2 instance
 It covers:
 - Creating a database (`fct`) and table (`studentInfo`) on EC2
 - Inserting sample data
-- Backing up the EC2 database
+- Backing up the EC2 database using `mysqldump`
 - Restoring the backup into an RDS database (`rdsdb`)
 - Verifying the data after migration
 - Presenting the AWS architecture and final output screenshots
@@ -49,9 +49,19 @@ SELECT * FROM studentInfo;
 
 ---
 
-## 📦 Step 3: Backup Database from EC2 (IaaS)
+## 📦 Step 3: Backup Database from EC2 (IaaS) using `mysqldump`
 ```bash
+# Backup the 'fct' database into a SQL file
 mysqldump -u root -p fct > fct_backup.sql
+
+# Backup all databases (optional)
+mysqldump -u root -p --all-databases > all_databases_backup.sql
+
+# Backup with structure only (no data)
+mysqldump -u root -p --no-data fct > fct_structure_only.sql
+
+# Backup with data only (no structure)
+mysqldump -u root -p --no-create-info fct > fct_data_only.sql
 ```
 
 ---
@@ -96,6 +106,6 @@ SELECT * FROM studentInfo;
 This workflow successfully migrates a MySQL database from EC2 (IaaS) to RDS (PaaS) using AWS services.  
 It demonstrates:
 - Database provisioning on EC2  
-- Data backup and restoration  
-- Cloud database management in RDS  
+- Data backup with `mysqldump`  
+- Data restoration into RDS  
 - Verification of successful migration  
