@@ -50,3 +50,9 @@ exit;
 
 # Exit EC2 SSH
 exit
+
+---
+
+## 📦 Step 4: Backup Database from EC2 (IaaS)
+
+
